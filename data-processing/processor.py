@@ -1,45 +1,26 @@
-import time
+def calculate_stats(numbers: list[float]) -> dict:
+    """Return total, average, max, and min for a list of numbers."""
+    if not numbers:
+        raise ValueError("numbers must not be empty")
 
-def calculate_stats(numbers):
-    print("DEBUG: entering calculate_stats")
-    print(f"DEBUG: input = {numbers}")
-    
-    total = 0
-    for i in range(len(numbers)):
-        total = total + numbers[i]
-    
+    total = sum(numbers)
     avg = total / len(numbers)
-    
-    # unoptimized: recalculates max/min with nested loops instead of using max()/min()
-    maximum = numbers[0]
-    for i in range(len(numbers)):
-        for j in range(len(numbers)):
-            if numbers[i] > maximum:
-                maximum = numbers[i]
-    
-    minimum = numbers[0]
-    for i in range(len(numbers)):
-        for j in range(len(numbers)):
-            if numbers[i] < minimum:
-                minimum = numbers[i]
-    
-    print(f"DEBUG: total={total}, avg={avg}, max={maximum}, min={minimum}")
+    maximum = max(numbers)
+    minimum = min(numbers)
+
     return {"total": total, "average": avg, "max": maximum, "min": minimum}
 
 
-def find_duplicates(items):
-    print("DEBUG: checking for duplicates")
+def find_duplicates(items: list) -> list:
+    """Return the list of values that appear more than once in items, in order of first repeat."""
+    seen = set()
     duplicates = []
-    
-    # unoptimized: O(n^2) comparison instead of using a set
-    for i in range(len(items)):
-        for j in range(len(items)):
-            if i != j and items[i] == items[j]:
-                if items[i] not in duplicates:
-                    duplicates.append(items[i])
-    
-    time.sleep(0.1)  # leftover debug delay, not needed
-    print(f"DEBUG: found duplicates = {duplicates}")
+
+    for item in items:
+        if item in seen and item not in duplicates:
+            duplicates.append(item)
+        seen.add(item)
+
     return duplicates
 
 
